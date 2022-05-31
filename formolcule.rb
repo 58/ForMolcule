@@ -357,8 +357,8 @@ def convert_aw(symbol)
     return 294
   end
 end
-
-text = ''
+print 'Chemical formula: '
+text = gets
 
 # no bracket or bracket
 mf_units = text.scan(/\(?\w+\)?\d*/)
