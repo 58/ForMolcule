@@ -400,14 +400,18 @@ end
 
 composition_formula = ''
 molecule_weight = 0
+weight_of_elements = {}
 chemical_formula_hash.each do |symbol, num|
   if num == 1 then
     composition_formula << "#{symbol}"
   else
     composition_formula << "#{symbol}#{num}"
   end
-  molecule_weight += convert_aw(symbol) * num
+  weight_of_element = convert_aw(symbol) * num
+  molecule_weight += weight_of_element
+  weight_of_elements.store(symbol, weight_of_element)
 end
 p chemical_formula
 p composition_formula
 p molecule_weight
+p weight_of_elements
