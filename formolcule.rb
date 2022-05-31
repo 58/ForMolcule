@@ -358,56 +358,56 @@ def convert_aw(symbol)
   end
 end
 print 'Chemical formula: '
-text = gets
+chemical_formula = gets
 
 # no bracket or bracket
-mf_units = text.scan(/\(?\w+\)?\d*/)
+chemical_formula_units = chemical_formula.scan(/\(?\w+\)?\d*/)
 
-mf_h = {}
-mf_units.each do |mf_unit|
-  if mf_unit.include? '(' then
+chemical_formula_hash = {}
+chemical_formula_units.each do |chemical_formula_unit|
+  if chemical_formula_unit.include? '(' then
     # delete brackets & split number of molecule
-    mfs = mf_unit.delete('(').split(')')
-    atom_units = mfs[0].scan(/[A-z][a-z]?\d?/)
+    chemical_formula_bracket = chemical_formula_unit.delete('(').split(')')
+    atom_units = chemical_formula_bracket[0].scan(/[A-z][a-z]?\d?/)
 
-    atom_units.each do |i|
-      element = i.delete("^a-zA-z")
-      num_atom = i.delete("^0-9").to_i == 0 ? 1 : i.delete("^0-9").to_i
+    atom_units.each do |atom_unit|
+      element = atom_unit.delete("^a-zA-z")
+      num_atom = atom_unit.delete("^0-9").to_i == 0 ? 1 : atom_unit.delete("^0-9").to_i
 
-      if mf_h.key?(element) then
-        mf_h[element] += num_atom * mfs[1].to_i
+      if chemical_formula_hash.key?(element) then
+        chemical_formula_hash[element] += num_atom * chemical_formula_bracket[1].to_i
       else
-        mf_h.store(element, num_atom * mfs[1].to_i)
+        chemical_formula_hash.store(element, num_atom * chemical_formula_bracket[1].to_i)
       end
     end
   else
     # {element}{number} style
-    atom_units = mf_unit.scan(/[A-z][a-z]?\d?/)
+    atom_units = chemical_formula_unit.scan(/[A-z][a-z]?\d?/)
     atom_units.each do |atom_unit|
       element = atom_unit.delete("^a-zA-z")
 
       # number of element ommision treatment
       num_atom = atom_unit.delete("^0-9").to_i == 0 ? 1 : atom_unit.delete("^0-9").to_i
 
-      if mf_h.key?(element) then
-        mf_h[element] += num_atom
+      if chemical_formula_hash.key?(element) then
+        chemical_formula_hash[element] += num_atom
       else
-        mf_h.store(element, num_atom)
+        chemical_formula_hash.store(element, num_atom)
       end
     end
   end
 end
 
-chemical_formula = ''
+composition_formula = ''
 molecule_weight = 0
-mf_h.each do |s, num|
+chemical_formula_hash.each do |symbol, num|
   if num == 1 then
-    chemical_formula << "#{s}"
+    composition_formula << "#{symbol}"
   else
-    chemical_formula << "#{s}#{num}"
+    composition_formula << "#{symbol}#{num}"
   end
-  molecule_weight += convert_aw(s) * num
+  molecule_weight += convert_aw(symbol) * num
 end
-p text
 p chemical_formula
+p composition_formula
 p molecule_weight
