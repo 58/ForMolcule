@@ -401,7 +401,11 @@ end
 chemical_formula = ''
 molecule_weight = 0
 mf_h.each do |s, num|
-  chemical_formula << "#{s}#{num}"
+  if num == 1 then
+    chemical_formula << "#{s}"
+  else
+    chemical_formula << "#{s}#{num}"
+  end
   molecule_weight += convert_aw(s) * num
 end
 p text
