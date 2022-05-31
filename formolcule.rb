@@ -358,7 +358,7 @@ def convert_aw(symbol)
   end
 end
 
-text = 'CuSO4(H2O)5'
+text = ''
 
 # no bracket or bracket
 mf_units = text.scan(/\(?\w+\)?\d*/)
@@ -375,7 +375,7 @@ mf_units.each do |mf_unit|
       num_atom = i.delete("^0-9").to_i == 0 ? 1 : i.delete("^0-9").to_i
 
       if mf_h.key?(element) then
-        mf_h[element] += 1 * mfs[1].to_i
+        mf_h[element] += num_atom * mfs[1].to_i
       else
         mf_h.store(element, num_atom * mfs[1].to_i)
       end
@@ -390,7 +390,7 @@ mf_units.each do |mf_unit|
       num_atom = atom_unit.delete("^0-9").to_i == 0 ? 1 : atom_unit.delete("^0-9").to_i
 
       if mf_h.key?(element) then
-        mf_h[element] += 1
+        mf_h[element] += num_atom
       else
         mf_h.store(element, num_atom)
       end
