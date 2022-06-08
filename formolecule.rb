@@ -401,6 +401,7 @@ end
 composition_formula = ''
 molecule_weight = 0
 weight_of_elements = {}
+percent_of_elements = {}
 chemical_formula_hash.each do |symbol, num|
   if num == 1 then
     composition_formula << "#{symbol}"
@@ -411,7 +412,11 @@ chemical_formula_hash.each do |symbol, num|
   molecule_weight += weight_of_element
   weight_of_elements.store(symbol, weight_of_element)
 end
+weight_of_elements.each do |symbol, weight|
+  percent_of_elements.store(symbol, weight / molecule_weight * 100)
+end
 p chemical_formula
 p composition_formula
 p molecule_weight
 p weight_of_elements
+p percent_of_elements
