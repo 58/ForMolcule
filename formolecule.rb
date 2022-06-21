@@ -368,7 +368,7 @@ chemical_formula_units.each do |chemical_formula_unit|
   if chemical_formula_unit.include? '(' then
     # delete brackets & split number of molecule
     chemical_formula_bracket = chemical_formula_unit.delete('(').split(')')
-    atom_units = chemical_formula_bracket[0].scan(/[A-z][a-z]?\d?/)
+    atom_units = chemical_formula_bracket[0].scan(/[A-z][a-z]?\d*/)
 
     atom_units.each do |atom_unit|
       element = atom_unit.delete("^a-zA-z")
@@ -382,7 +382,7 @@ chemical_formula_units.each do |chemical_formula_unit|
     end
   else
     # {element}{number} style
-    atom_units = chemical_formula_unit.scan(/[A-z][a-z]?\d?/)
+    atom_units = chemical_formula_unit.scan(/[A-z][a-z]?\d*/)
     atom_units.each do |atom_unit|
       element = atom_unit.delete("^a-zA-z")
 
