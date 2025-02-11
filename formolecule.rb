@@ -358,7 +358,7 @@ def convert_aw(symbol)
   end
 end
 print 'Chemical formula: '
-chemical_formula = gets
+chemical_formula = gets.chomp
 
 # no bracket or bracket
 chemical_formula_units = chemical_formula.scan(/\(?\w+\)?\d*/)
