@@ -358,7 +358,7 @@ def convert_aw(symbol)
   end
 end
 print 'Chemical formula: '
-chemical_formula = gets
+chemical_formula = gets.chomp
 
 # no bracket or bracket
 chemical_formula_units = chemical_formula.scan(/\(?\w+\)?\d*/)
@@ -368,7 +368,7 @@ chemical_formula_units.each do |chemical_formula_unit|
   if chemical_formula_unit.include? '(' then
     # delete brackets & split number of molecule
     chemical_formula_bracket = chemical_formula_unit.delete('(').split(')')
-    atom_units = chemical_formula_bracket[0].scan(/[A-z][a-z]?\d?/)
+    atom_units = chemical_formula_bracket[0].scan(/[A-z][a-z]?\d*/)
 
     atom_units.each do |atom_unit|
       element = atom_unit.delete("^a-zA-z")
@@ -382,7 +382,7 @@ chemical_formula_units.each do |chemical_formula_unit|
     end
   else
     # {element}{number} style
-    atom_units = chemical_formula_unit.scan(/[A-z][a-z]?\d?/)
+    atom_units = chemical_formula_unit.scan(/[A-z][a-z]?\d*/)
     atom_units.each do |atom_unit|
       element = atom_unit.delete("^a-zA-z")
 
@@ -400,14 +400,23 @@ end
 
 composition_formula = ''
 molecule_weight = 0
+weight_of_elements = {}
+percent_of_elements = {}
 chemical_formula_hash.each do |symbol, num|
   if num == 1 then
     composition_formula << "#{symbol}"
   else
     composition_formula << "#{symbol}#{num}"
   end
-  molecule_weight += convert_aw(symbol) * num
+  weight_of_element = convert_aw(symbol) * num
+  molecule_weight += weight_of_element
+  weight_of_elements.store(symbol, weight_of_element)
+end
+weight_of_elements.each do |symbol, weight|
+  percent_of_elements.store(symbol, weight / molecule_weight * 100)
 end
 p chemical_formula
 p composition_formula
 p molecule_weight
+p weight_of_elements
+p percent_of_elements
